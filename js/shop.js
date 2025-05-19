@@ -10,6 +10,9 @@ var cart = [];
 
 var total = 0;
 
+const totalPrice = document.querySelector('#total_price');
+const cartList = document.querySelector('#cart_list');
+
 // Exercise 1
 
 function buy(id) {
@@ -31,11 +34,15 @@ function buy(id) {
                         ) : "";
 }
 
+buy(1);
+buy(1);
+buy(1);
+buy(2);
+buy(3);
+buy(4);
+
 // Exercise 2
 function cleanCart() {
-    const totalPrice = document.querySelector('#total_price');
-    const cartList = document.querySelector('#cart_list');
-
     cart.length = 0;
     total = 0;
     totalPrice.innerHTML = total;
@@ -45,16 +52,26 @@ function cleanCart() {
 // Exercise 3
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
+    let cartPrice = 0;
+    cart.forEach(product => {
+        if (cart.some(p => p.offer)) {
+            applyPromotionsCart()
+        }
+        cartPrice += product.price
+    });
 
+    totalPrice.innerHTML = cartPrice;
 }
 
 // Exercise 4
 function applyPromotionsCart() {
     // Apply promotions to each item in the array "cart"
-
+    cart.forEach(p => {
+        if (p.offer && (p.number === p.offer.number)) {
+            p.price = p.price * (p.offer.percent/100);
+        }
+    });
 }
-
-applyPromotionsCart();
 
 // Exercise 5
 function printCart() {
