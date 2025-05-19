@@ -33,7 +33,13 @@ function buy(id) {
 
 // Exercise 2
 function cleanCart() {
+    const totalPrice = document.querySelector('#total_price');
+    const cartList = document.querySelector('#cart_list');
 
+    cart.length = 0;
+    total = 0;
+    totalPrice.innerHTML = total;
+    cartList.innerHTML = "";
 }
 
 // Exercise 3
