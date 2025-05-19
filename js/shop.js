@@ -18,8 +18,23 @@ console.log(directory);*/
 var cart = [];
 
 var total = 0;
+async function getProductData () {
+    const getProducts = await fetch('./json_files/products.json');
+
+    const products = await JSON.parse(getProducts);
+
+    return products;
+}
 
 // Exercise 1
+
+(async () => {
+
+    let products = await getProductData();
+
+    console.log(products);
+});
+
 function buy(id) {
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cart array
