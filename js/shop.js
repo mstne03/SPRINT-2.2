@@ -6,10 +6,11 @@
 // ** Don't hesitate to seek help from your peers or your mentor if you still struggle with debugging.
 
 // Improved version of cartList. Cart is an array of products (objects), but each one has a quantity field to define its quantity, so these products are not repeated.
-var cart = [];
+const cart = [];
 
-var total = 0;
+let total = 0;
 
+const countProduct = document.querySelector('#count_product');
 const totalPrice = document.querySelector('#total_price');
 const cartList = document.querySelector('#cart_list');
 
@@ -27,19 +28,11 @@ function buy(id) {
                         quantity : 1
                     });
 
-    cart.length !== 0 ? 
-                        (
-                            total++, 
-                            document.querySelector('#count_product').innerHTML = total
-                        ) : "";
-}
+    total++;
+    countProduct.innerHTML = total;
 
-buy(1);
-buy(1);
-buy(1);
-buy(2);
-buy(3);
-buy(4);
+    calculateTotal();
+}
 
 // Exercise 2
 function cleanCart() {
@@ -47,28 +40,29 @@ function cleanCart() {
     total = 0;
     totalPrice.innerHTML = total;
     cartList.innerHTML = "";
+    countProduct.innerHTML = total;
 }
 
 // Exercise 3
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
-    let cartPrice = 0;
-    cart.forEach(product => {
-        if (cart.some(p => p.offer)) {
-            applyPromotionsCart()
-        }
-        cartPrice += product.price
-    });
+    if (cart.some(p => p.offer)) {
+        applyPromotionsCart()
+    }
+    
+    let cartPrice = cart.reduce(
+                                (acc, act) => acc +
+                                act.price*act.quantity, 0);
 
-    totalPrice.innerHTML = cartPrice;
+    totalPrice.innerHTML = cartPrice.toFixed(2);
 }
 
 // Exercise 4
 function applyPromotionsCart() {
     // Apply promotions to each item in the array "cart"
     cart.forEach(p => {
-        if (p.offer && (p.number === p.offer.number)) {
-            p.price = p.price * (p.offer.percent/100);
+        if (p.offer && (p.quantity >= p.offer.number)) {
+            p.price -= p.price * (p.offer.percent/100);
         }
     });
 }
@@ -76,8 +70,10 @@ function applyPromotionsCart() {
 // Exercise 5
 function printCart() {
     // Fill the shopping cart modal manipulating the shopping cart dom
-
+    
 }
+
+printCart();
 
 
 // ** Nivell II **
