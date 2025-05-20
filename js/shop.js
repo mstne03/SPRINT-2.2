@@ -30,8 +30,6 @@ function buy(id) {
 
     total++;
     countProduct.innerHTML = total;
-
-    calculateTotal();
 }
 
 // Exercise 2
@@ -46,34 +44,46 @@ function cleanCart() {
 // Exercise 3
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
-    if (cart.some(p => p.offer)) {
-        applyPromotionsCart()
-    }
-    
     let cartPrice = cart.reduce(
-                                (acc, act) => acc +
-                                act.price*act.quantity, 0);
+        (acc, act) => 
+            acc +
+            ((act.offer && act.quantity >= act.offer.number) ? 
+            applyPromotionsCart(act) : act.price) * act.quantity, 
+        0
+    );
 
     totalPrice.innerHTML = cartPrice.toFixed(2);
 }
 
 // Exercise 4
-function applyPromotionsCart() {
+function applyPromotionsCart(product) {
     // Apply promotions to each item in the array "cart"
-    cart.forEach(p => {
-        if (p.offer && (p.quantity >= p.offer.number)) {
-            p.price -= p.price * (p.offer.percent/100);
-        }
-    });
+    return (product.price - product.price*(product.offer.percent/100)).toFixed(2);
 }
 
 // Exercise 5
 function printCart() {
+    calculateTotal();
     // Fill the shopping cart modal manipulating the shopping cart dom
-    
-}
+    cartList.innerHTML = "";
+    const products = cart.map(p => {
+        const cartTable = document.createElement('tr');
+        cartTable.innerHTML = 
+                        `
+                        <th scope = "row">${p.name}</th>\n
+                        <td>$${p.price}</td>\n
+                        <td>${p.quantity}</td>\n
+                        <td>$${
+                            (p.offer && p.quantity >= p.offer.number) ? 
+                            ((p.price - p.price*(p.offer.percent/100))*p.quantity).toFixed(2)
+                            :(p.price*p.quantity).toFixed(2)
+                        }</td>
+                        `;
+        return cartTable;
+    });
 
-printCart();
+    cartList.append(...products);
+}
 
 
 // ** Nivell II **
