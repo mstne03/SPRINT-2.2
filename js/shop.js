@@ -69,16 +69,21 @@ function printCart() {
     const products = cart.map(p => {
         const cartTable = document.createElement('tr');
         cartTable.innerHTML = 
-                        `
-                        <th scope = "row">${p.name}</th>\n
-                        <td>$${p.price}</td>\n
-                        <td>${p.quantity}</td>\n
-                        <td>$${
-                            (p.offer && p.quantity >= p.offer.number) ? 
-                            ((p.price - p.price*(p.offer.percent/100))*p.quantity).toFixed(2)
-                            :(p.price*p.quantity).toFixed(2)
-                        }</td>
-                        `;
+            `
+            <th scope = "row">${p.name}</th>\n
+            <td>$${p.price}</td>\n
+            <td>${p.quantity}
+                <button onclick="removeFromCart(${p.id})">
+                    -
+                </button>
+            </td>\n
+            <td>$${
+                (p.offer && p.quantity >= p.offer.number) ? 
+                ((p.price - p.price*(p.offer.percent/100))*p.quantity).toFixed(2)
+                :(p.price*p.quantity).toFixed(2)
+            }
+            </td>
+            `;
         return cartTable;
     });
 
@@ -90,7 +95,16 @@ function printCart() {
 
 // Exercise 7
 function removeFromCart(id) {
-    
+    let product = cart.find(p => p.id === id);
+    product.quantity--;
+
+    if (product.quantity === 0) {
+        cart.splice(cart.indexOf(product), 1);
+    }
+
+    printCart();
+    total--;
+    countProduct.innerHTML = total;
 }
 
 function open_modal() {
