@@ -98,8 +98,10 @@ function removeFromCart(id) {
     let product = cart.find(p => p.id === id);
     product.quantity--;
 
+    let i = cart.indexOf(product);
+
     if (product.quantity === 0) {
-        cart.splice(cart.indexOf(product), 1);
+        cart.splice(i, 1);
     }
 
     printCart();
