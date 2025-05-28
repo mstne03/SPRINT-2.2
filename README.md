@@ -23,6 +23,8 @@ This project is focused on implementing the core **functionality** and **basic s
 ---
 
 ## 📁 Project Structure
+```
+
 project-root/
 ├── index.html
 ├── checkout.html
@@ -35,7 +37,7 @@ project-root/
 ├── /images
 │ └── [images, icons...]
 
-
+```
 ---
 
 ## ✨ Key Features to Implement
@@ -59,8 +61,12 @@ project-root/
 
 ## 👨‍💻 Author - mstne_03
 
+
 Developed as a learning and practice project. Feel free to fork, modify, and enhance!
 
-You can clone the project copying this on your terminal: `git clone https://github.com/mstne03/SPRINT-2.2.git`
+Clone the project: 
+```
+git clone https://github.com/mstne03/SPRINT-2.2.git
+```
 
 ---
